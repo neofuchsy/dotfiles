@@ -24,6 +24,8 @@ Rectangle {
             Rectangle {
                 id: workspaceItem
 
+                required property var modelData
+
                 property bool hovered: false
                 property bool active: modelData.active
                 property bool activeInMonitor: panel.screen.name === modelData.monitor?.name && modelData.active
@@ -44,7 +46,7 @@ Rectangle {
                     hoverEnabled: true
 
                     onClicked: () => {
-                        if (!workspaceItem.activeInMonitor) Hyprland.dispatch("workspace " + modelData.id)
+                        if (!workspaceItem.activeInMonitor) Hyprland.dispatch(`hl.dsp.focus({ workspace = "${modelData.id}" })`)
                     }
                 }
 
@@ -111,7 +113,7 @@ Rectangle {
                                     hoverEnabled: true
 
                                     onClicked: () => {
-                                        Hyprland.dispatch(`focuswindow address:${modelData.address}`)
+                                        Hyprland.dispatch(`hl.dsp.focus({ window = "address:${modelData.address}" })`)
                                     }
 
                                     onEntered: () => {
